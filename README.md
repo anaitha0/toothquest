@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🦷 ToothQuest
 
-## Getting Started
+**ToothQuest** is an AI-powered learning platform designed for **dental students** to enhance their understanding through **adaptive quizzes** that evolve based on user performance, progress, and knowledge gaps.  
 
-First, run the development server:
+It combines **Artificial Intelligence**, **Natural Language Processing (NLP)**, and **Gamification** to deliver a personalized and engaging study experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🤖 **AI-Generated Quizzes** – Automatically creates dental quizzes tailored to each student’s level.  
+- 📊 **Adaptive Learning** – Adjusts question difficulty based on past answers and progress.  
+- 🧠 **Error-Based Reinforcement** – Repeats or reformulates questions from topics where the student struggles.  
+- 🧩 **Topic Variety** – Covers key dental disciplines such as anatomy, radiology, pathology, prosthodontics, and more.  
+- 🕹️ **Gamified Experience** – Includes badges, levels, streaks, and progress tracking.  
+- 📈 **Performance Analytics** – Visualizes learning progress and highlights strengths & weaknesses.  
+- 🧑‍⚕️ **Instructor Mode (optional)** – Allows teachers to view class statistics and recommend topics.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧬 How It Works
 
-To learn more about Next.js, take a look at the following resources:
+1. **Initial Assessment:**  
+   The platform starts with a diagnostic quiz to determine your current level.  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Personalized Quiz Generation:**  
+   The AI dynamically generates new questions using large language models (LLMs) fine-tuned on dental knowledge.  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Adaptive Feedback:**  
+   When you make a mistake, the system explains the correct answer and gives follow-up questions to reinforce learning.  
 
-## Deploy on Vercel
+4. **Progress Tracking:**  
+   Your results are stored and analyzed to guide your learning path automatically.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🏗️ Tech Stack
+
+- **Frontend:** React / Next.js (TailwindCSS for styling)  
+- **Backend:** Django REST Framework / Flask  
+- **Database:** PostgreSQL  
+- **AI Models:** GPT-based LLMs, BERT for topic understanding  
+- **Visualization:** Recharts / Chart.js  
+
+---
+
+
