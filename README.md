@@ -4,9 +4,9 @@
 
 It combines **Artificial Intelligence**, **Natural Language Processing (NLP)**, and **Gamification** to deliver a personalized and engaging study experience.
 
-```markdown
-![Dashboard Page](./screenshots/student_dash.png)
-![Calendar Dashboard](./screenshots/calendar.png)
+<img width="3840" height="2160" alt="image" src="https://github.com/user-attachments/assets/993b51c2-0856-462f-95b7-efa2e2224d2b" />
+
+
 ---
 
 ## 🚀 Features
@@ -20,6 +20,7 @@ It combines **Artificial Intelligence**, **Natural Language Processing (NLP)**, 
 - 🧑‍⚕️ **Instructor Mode (optional)** – Allows teachers to view class statistics and recommend topics.
 
 ---
+<img width="3840" height="2160" alt="image" src="https://github.com/user-attachments/assets/a5db5e4f-a11c-4b47-adfe-fc0a50cfac2f" />
 
 ## 🧬 How It Works
 
@@ -36,6 +37,7 @@ It combines **Artificial Intelligence**, **Natural Language Processing (NLP)**, 
    Your results are stored and analyzed to guide your learning path automatically.
 
 ---
+<img width="3840" height="2160" alt="image" src="https://github.com/user-attachments/assets/f3f00af8-13d6-4271-bf85-f3fb3e501585" />
 
 ## 🏗️ Tech Stack
 
