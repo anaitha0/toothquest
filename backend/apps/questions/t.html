@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Guide: Latches & Flip-Flops</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin: 40px 0 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea22 0%, #764ba222 100%);
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+        }
+        
+        h3 {
+            color: #555;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+        }
+        
+        .concept-box {
+            background: #f8f9ff;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .circuit-display {
+            background: white;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .truth-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .truth-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .truth-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 1.05em;
+        }
+        
+        .truth-table tr:nth-child(even) {
+            background-color: #f8f9ff;
+        }
+        
+        .truth-table tr:hover {
+            background-color: #e8e9ff;
+            transition: 0.3s;
+        }
+        
+        .highlight-red {
+            background-color: #ffe0e0 !important;
+            font-weight: bold;
+            color: #cc0000;
+        }
+        
+        .highlight-green {
+            background-color: #e0ffe0 !important;
+            font-weight: bold;
+            color: #008800;
+        }
+        
+        .highlight-yellow {
+            background-color: #ffffcc !important;
+            font-weight: bold;
+        }
+        
+        .step-box {
+            background: linear-gradient(135deg, #84fab022 0%, #8fd3f422 100%);
+            border-left: 5px solid #84fab0;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: #84fab0;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 3px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .warning-box::before {
+            content: "⚠️ ";
+            font-size: 1.5em;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border: 3px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .success-box::before {
+            content: "✓ ";
+            font-size: 1.5em;
+            color: #28a745;
+        }
+        
+        .timing-diagram {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .signal-name {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            width: 120px;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .comparison-card {
+            background: #f8f9ff;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .comparison-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        
+        .interactive-note {
+            background: linear-gradient(135deg, #667eea11 0%, #764ba211 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            font-style: italic;
+            border-left: 4px solid #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Visual Guide: Latches & Flip-Flops</h1>
+        <p style="text-align: center; font-size: 1.2em; color: #666; margin-bottom: 30px;">
+            <strong>Understanding Memory in Digital Circuits - From Zero to Hero!</strong>
+        </p>
+
+        <!-- PART 1: THE PROBLEM -->
+        <h2>🎯 Part 1: What's the Problem We're Solving?</h2>
+        
+        <div class="concept-box">
+            <h3>Goal: Make a circuit that REMEMBERS!</h3>
+            <p style="font-size: 1.1em; margin: 15px 0;">
+                Imagine a light switch. When you press it ON, the light turns on. But when you RELEASE your finger, 
+                the light should STAY ON! That's memory - the circuit remembers you pressed it.
+            </p>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="display: inline-block; background: #f0f0f0; padding: 20px; border-radius: 10px; margin: 10px;">
+                    <div style="font-size: 1.2em; font-weight: bold;">❌ Normal Gate (No Memory)</div>
+                    <div style="margin: 10px 0;">Input=1 → Output=1</div>
+                    <div style="margin: 10px 0;">Input=0 → Output=0 ⚠️ FORGOT!</div>
+                </div>
+                
+                <div style="display: inline-block; background: #d4edda; padding: 20px; border-radius: 10px; margin: 10px;">
+                    <div style="font-size: 1.2em; font-weight: bold;">✓ Memory Circuit (Remembers!)</div>
+                    <div style="margin: 10px 0;">Input=1 → Output=1</div>
+                    <div style="margin: 10px 0;">Input=0 → Output=1 ✓ REMEMBERED!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART 2: SR LATCH -->
+        <h2>🔵 Part 2: SR LATCH - The Basic Memory Cell</h2>
+        
+        <div class="concept-box">
+            <h3>SR Latch = Set-Reset Latch</h3>
+            <ul style="font-size: 1.1em; margin-left: 30px;">
+                <li><strong>S (Set):</strong> Makes output = 1</li>
+                <li><strong>R (Reset):</strong> Makes output = 0</li>
+                <li><strong>Q:</strong> The output that remembers!</li>
+            </ul>
+        </div>
+
+        <h3>🔹 The Circuit</h3>
+        <div class="circuit-display">
+<pre style="color: #333;">
+           <span style="color: #d63384;">SR LATCH</span> (made with 2 NOR gates)
+        
+                ┌─────────┐
+    S ─────────→│         │──┐
+             ┌─→│  NOR 1  │  │
+             │  │         │  │
+             │  └─────────┘  │
+             │               │
+             │               ├────→ Q (OUTPUT)
+             │               │
+             │  ┌─────────┐  │
+             └──│         │←─┘
+          ┌────→│  NOR 2  │
+    R ────┘     │         │
+                └─────────┘
+
+    <span style="color: #667eea; font-weight: bold;">Key: The output Q feeds back to the input!</span>
+    <span style="color: #667eea;">This feedback creates MEMORY!</span>
+</pre>
+        </div>
+
+        <h3>🔹 NOR Gate Quick Reminder</h3>
+        <table class="truth-table">
+            <thead>
+                <tr>
+                    <th>Input A</th>
+                    <th>Input B</th>
+                    <th>Output (A NOR B)</th>
+                    <th>In Words</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-green">
+                    <td>0</td>
+                    <td>0</td>
+                    <td><strong>1</strong></td>
+                    <td>BOTH zero → output is 1</td>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>ANY input is 1 → output is 0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>ANY input is 1 → output is 0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>ANY input is 1 → output is 0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>🔹 How SR Latch Works - Step by Step</h3>
+        
+        <div class="step-box">
+            <span class="step-number">1</span>
+            <strong style="font-size: 1.2em;">SETTING Q to 1 (S=1, R=0)</strong>
+            <div class="circuit-display" style="margin-top: 15px;">
+<pre>
+    S=<span style="color: red; font-weight: bold;">1</span> ────→ │NOR│──→ <span style="color: blue; font-weight: bold;">0</span>  (because S=1, NOR outputs 0)
+          ┌→ │   │
+          │  └───┘
+          │
+          │  ┌───┐
+          └──│NOR│──→ <span style="color: green; font-weight: bold;">1</span>  (both inputs are 0, so NOR outputs 1)
+    R=<span style="color: blue; font-weight: bold;">0</span> ────→ │   │
+               └───┘
+               Q=<span style="color: green; font-weight: bold;">1</span> ✓
+
+    <span style="color: green; font-weight: bold;">Result: Q is SET to 1!</span>
+</pre>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">2</span>
+            <strong style="font-size: 1.2em;">HOLDING the value (S=0, R=0)</strong>
+            <div class="circuit-display" style="margin-top: 15px;">
+<pre>
+    S=<span style="color: blue; font-weight: bold;">0</span> ────→ │NOR│──→ <span style="color: blue; font-weight: bold;">0</span>  (because Q=1 feeds back)
+          ┌→ │   │      ↑
+          │  └───┘      │
+          │          <span style="color: green; font-weight: bold;">1</span> feeds back
+          │  ┌───┐      │
+          └──│NOR│──→ <span style="color: green; font-weight: bold;">1</span>  (both inputs are 0, output stays 1)
+    R=<span style="color: blue; font-weight: bold;">0</span> ────→ │   │
+               └───┘
+               Q=<span style="color: green; font-weight: bold;">1</span> ✓
+
+    <span style="color: green; font-weight: bold;">Result: Q REMEMBERS it's 1! Even though S went back to 0!</span>
+</pre>
+            </div>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">3</span>
+            <strong style="font-size: 1.2em;">RESETTING Q to 0 (S=0, R=1)</strong>
+            <div class="circuit-display" style="margin-top: 15px;">
+<pre>
+    S=<span style="color: blue; font-weight: bold;">0</span> ────→ │NOR│──→ <span style="color: green; font-weight: bold;">1</span>  (both inputs are 0 now)
+          ┌→ │   │      
+          │  └───┘      
+          │          <span style="color: blue; font-weight: bold;">0</span> feeds back (changed!)
+          │  ┌───┐      │
+          └──│NOR│──→ <span style="color: blue; font-weight: bold;">0</span>  (because R=1, NOR outputs 0)
+    R=<span style="color: red; font-weight: bold;">1</span> ────→ │   │
+               └───┘
+               Q=<span style="color: blue; font-weight: bold;">0</span> ✓
+
+    <span style="color: blue; font-weight: bold;">Result: Q is RESET to 0!</span>
+</pre>
+            </div>
+        </div>
+
+        <h3>🔹 SR Latch Truth Table</h3>
+        <table class="truth-table">
+            <thead>
+                <tr>
+                    <th>S (Set)</th>
+                    <th>R (Reset)</th>
+                    <th>Q (Output)</th>
+                    <th>What Happens?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-yellow">
+                    <td>0</td>
+                    <td>0</td>
+                    <td><strong>Q (no change)</strong></td>
+                    <td>HOLD - Remember previous value</td>
+                </tr>
+                <tr class="highlight-green">
+                    <td>1</td>
+                    <td>0</td>
+                    <td><strong>1</strong></td>
+                    <td>SET - Force output to 1</td>
+                </tr>
+                <tr class="highlight-green">
+                    <td>0</td>
+                    <td>1</td>
+                    <td><strong>0</strong></td>
+                    <td>RESET - Force output to 0</td>
+                </tr>
+                <tr class="highlight-red">
+                    <td>1</td>
+                    <td>1</td>
+                    <td><strong>??? FORBIDDEN!</strong></td>
+                    <td>⚠️ NEVER DO THIS - Unpredictable!</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning-box">
+            <strong>Why is S=1, R=1 forbidden?</strong><br>
+            Both NOR gates try to output 0 at the same time, creating conflict. The circuit oscillates rapidly 
+            and eventually settles to a random value (0 or 1). We can't predict which! This makes the circuit unreliable.
+        </div>
+
+        <!-- PART 3: D LATCH -->
+        <h2>🟢 Part 3: D LATCH - Making Life Easier!</h2>
+        
+        <div class="concept-box">
+            <h3>Problem with SR Latch: Too complicated!</h3>
+            <p style="font-size: 1.1em;">
+                You have to be careful never to set S=1 and R=1 at the same time. What if we could make it simpler?
+            </p>
+            
+            <div class="success-box" style="margin-top: 20px;">
+                <strong>Solution: D Latch!</strong><br>
+                • Only ONE input: D (Data)<br>
+                • Add a "gate" that controls WHEN to store: C (Clock/Control)<br>
+                • Automatically prevents S=R=1 problem!
+            </div>
+        </div>
+
+        <h3>🔹 The Circuit</h3>
+        <div class="circuit-display">
+<pre style="color: #333;">
+                <span style="color: #d63384;">D LATCH</span>
+        
+                ┌─────────────────┐
+    D ─────────→│      ┌────┐     │
+                │  ───→│AND │──→ S│
+                │  │   └────┘     │     ┌─────────┐
+    C ─────────→│──┤              │────→│         │──→ Q
+                │  │   ┌────┐     │     │ SR Latch│
+                │  └──→│AND │──→ R│     │         │
+                │  ○   └────┘     │     └─────────┘
+                │  └──────────────│
+                │   (NOT gate)    │
+                └─────────────────┘
+
+    <span style="color: #667eea; font-weight: bold;">Key Points:</span>
+    • D goes through AND gate to become S
+    • D inverted (flipped) goes through AND gate to become R
+    • C (Clock) enables both AND gates
+    • This GUARANTEES S and R are always opposite!
+</pre>
+        </div>
+
+        <h3>🔹 How D Latch Works</h3>
+        
+        <div class="comparison-grid">
+            <div class="comparison-card">
+                <h4>When C = 0 (Clock OFF)</h4>
+                <div style="margin-top: 15px;">
+                    <p>🔒 <strong>HOLD MODE</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Both AND gates output 0</li>
+                        <li>S = 0, R = 0</li>
+                        <li>SR Latch HOLDS its value</li>
+                        <li>D input is IGNORED</li>
+                    </ul>
+                    <div class="circuit-display" style="margin-top: 15px; font-size: 0.9em;">
+<pre>
+D = anything
+C = <span style="color: red;">0</span>
+      ↓
+S = 0  → SR Latch → Q = <span style="color: orange;">hold</span>
+R = 0
+</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-card">
+                <h4>When C = 1 (Clock ON)</h4>
+                <div style="margin-top: 15px;">
+                    <p>🔓 <strong>TRANSPARENT MODE</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>AND gates are enabled</li>
+                        <li>If D=1: S=1, R=0 → Q=1</li>
+                        <li>If D=0: S=0, R=1 → Q=0</li>
+                        <li><strong>Q follows D!</strong></li>
+                    </ul>
+                    <div class="circuit-display" style="margin-top: 15px; font-size: 0.9em;">
+<pre>
+D = <span style="color: green;">1</span>
+C = <span style="color: green;">1</span>
+      ↓
+S = 1  → SR Latch → Q = <span style="color: green;">1</span>
+R = 0
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>🔹 D Latch Truth Table</h3>
+        <table class="truth-table">
+            <thead>
+                <tr>
+                    <th>C (Clock)</th>
+                    <th>D (Data)</th>
+                    <th>Q (Output)</th>
+                    <th>Explanation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-yellow">
+                    <td>0</td>
+                    <td>0</td>
+                    <td><strong>Q (hold)</strong></td>
+                    <td>Clock OFF → Ignore D, keep old value</td>
+                </tr>
+                <tr class="highlight-yellow">
+                    <td>0</td>
+                    <td>1</td>
+                    <td><strong>Q (hold)</strong></td>
+                    <td>Clock OFF → Ignore D, keep old value</td>
+                </tr>
+                <tr class="highlight-green">
+                    <td>1</td>
+                    <td>0</td>
+                    <td><strong>0</strong></td>
+                    <td>Clock ON → Q copies D (which is 0)</td>
+                </tr>
+                <tr class="highlight-green">
+                    <td>1</td>
+                    <td>1</td>
+                    <td><strong>1</strong></td>
+                    <td>Clock ON → Q copies D (which is 1)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="interactive-note">
+            💡 <strong>Key Insight:</strong> When C=1, the output Q "follows" the input D like a shadow. 
+            When C=0, Q freezes and remembers whatever value it had.
+        </div>
+
+        <!-- PART 4: TIMING DIAGRAMS -->
+        <h2>⏰ Part 4: TIMING DIAGRAMS - The Visual Story!</h2>
+        
+        <div class="concept-box">
+            <h3>What is a Timing Diagram?</h3>
+            <p style="font-size: 1.1em;">
+                A timing diagram shows how signals change over TIME. Think of it as a movie of what happens in the circuit!
+            </p>
+            <ul style="font-size: 1.05em; margin: 15px 0 15px 30px;">
+                <li><strong>Horizontal axis:</strong> Time moves left to right →</li>
+                <li><strong>Each row:</strong> One signal (Clock, D, Q, etc.)</li>
+                <li><strong>High position:</strong> Signal = 1</li>
+                <li><strong>Low position:</strong> Signal = 0</li>
+            </ul>
+        </div>
+
+        <h3>🔹 D Latch Timing Diagram Example</h3>
+        
+        <div class="timing-diagram">
+            <pre style="font-size: 13px; line-height: 1.6;">
+<span style="color: #666;">Time:     0   1   2   3   4   5   6   7   8   9  10</span>
+
+<span class="signal-name">Clock (C):</span>  ──┐       ┌───────┐       ┌───────
+              │   <span style="background: #ffff99;">A</span>   │   <span style="background: #ffff99;">B</span>   │   <span style="background: #ffff99;">C</span>   │
+            ──┘       └───────┘       └───────
+
+<span class="signal-name">D (input):</span>  ────┐   ┌───┐       ┌───────────
+                │   │   │       │
+              ──┘   └───┘       └───────────
+
+<span class="signal-name">Q (latch):</span>  ────┐       ┌───┐       ┌───────
+                │       │   │       │
+              ──┘       └───┘       └───────
+                 <span style="color: red;">↑</span>       <span style="color: red;">↑</span>   <span style="color: red;">↑</span>       <span style="color: red;">↑</span>
+              <span style="color: red;">Changes during C=1 (follows D)</span>
+</pre>
+        </div>
+
+        <h3>🔹 Let's Trace Through It Step by Step!</h3>
+        
+        <div class="step-box">
+            <span class="step-number">A</span>
+            <strong>Region A: C=1, D=0</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>Clock is HIGH (C=1) → Latch is TRANSPARENT</li>
+                <li>D=0 → Q follows D → Q=0</li>
+                <li><strong>Q changes to 0</strong></li>
+            </ul>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">B</span>
+            <strong>Between A and B: C=0</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>Clock is LOW (C=0) → Latch HOLDS</li>
+                <li>D changes from 0→1→0, but <strong>Q stays 0</strong></li>
+                <li>D is ignored when clock is low!</li>
+            </ul>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">C</span>
+            <strong>Region B: C=1, D=1 then D=0</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>Clock goes HIGH (C=1) → Latch becomes TRANSPARENT</li>
+                <li>D=1 → Q follows → Q=1</li>
+                <li>Then D changes to 0 → Q follows → Q=0</li>
+                <li><strong>Q follows every D change while C=1!</strong></li>
+            </ul>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">D</span>
+            <strong>Region C: C=1, D=1</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>Clock is HIGH → TRANSPARENT</li>
+                <li>D=1 → Q=1</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            <strong>Problem with D Latch:</strong><br>
+            When Clock=1 for a LONG time, Q can change MULTIPLE times if D keeps changing!
+            This makes it hard to control in complex circuits. We need something better...
+        </div>
+
+        <!-- PART 5: D FLIP-FLOP -->
+        <h2>🔴 Part 5: D FLIP-FLOP - The Ultimate Solution!</h2>
+        
+        <div class="concept-box">
+            <h3>The Big Improvement: EDGE-TRIGGERED!</h3>
+            <p style="font-size: 1.1em; margin: 15px 0;">
+                <strong>D Latch problem:</strong> Responds the ENTIRE time Clock=1 (could change many times)<br>
+                <strong>D Flip-Flop solution:</strong> Responds ONLY at the INSTANT Clock goes 0→1 (rising edge)
+            </p>
+            
+            <div class="circuit-display">
+<pre>
+  <span style="color: #667eea;">Rising Edge = The exact moment Clock goes from 0 to 1</span>
+
+                     <span style="color: red; font-weight: bold;">↑ Rising Edge</span>
+  Clock:  ────┐      ┌───────
+              │      │
+            ──┘      └───────
+</pre>
+            </div>
+        </div>
+
+        <h3>🔹 How It Works: Master-Slave Design</h3>
+        
+        <div class="circuit-display">
+<pre style="color: #333;">
+                <span style="color: #d63384;">D FLIP-FLOP</span>
+        
+    ┌──────────────────────────────────────────┐
+    │                                          │
+    │   <span style="color: #667eea;">MASTER Latch</span>      <span style="color: #764ba2;">SLAVE Latch</span>     │
+    │   ┌────────┐        ┌────────┐          │
+D ──│──→│D  Dm Qm│───────→│D  Ds Qs│──────→ Q │
+    │   │        │        │        │          │
+    │   │  C     │        │  C     │          │
+    │   └───┬────┘        └───┬────┘          │
+    │       │                 │               │
+    │       │      ┌────┐     │               │
+Clk─│───────┴─────→│NOT │─────┘               │
+    │              └────┘                     │
+    │               ↑                         │
+    │          <span style="color: red;">Inverted!</span>                    │
+    └──────────────────────────────────────────┘
+
+    <span style="color: #667eea; font-weight: bold;">Two latches with OPPOSITE clocks!</span>
+    • Master gets Clock
+    • Slave gets inverted Clock (NOT Clock)
+</pre>
+        </div>
+
+        <h3>🔹 The Magic: How It Captures Data at the Edge</h3>
+        
+        <div class="comparison-grid">
+            <div class="comparison-card" style="background: #ffe8e8;">
+                <h4>Phase 1: Clock = 0</h4>
+                <div class="circuit-display" style="margin-top: 15px; font-size: 0.85em;">
+<pre>
+Clock = <span style="color: blue;">0</span>
+        ↓
+Master C = <span style="color: blue;">0</span> (inverted = 1)
+  → Master is <span style="color: green;">TRANSPARENT</span>
+  → Master loads D value
+        
+Slave C = <span style="color: blue;">0</span>
+  → Slave <span style="color: orange;">HOLDS</span>
+  → Output Q stays same
+</pre>
+                </div>
+                <p style="margin-top: 10px; color: #c00;">
+                    <strong>Master is loading new data, but Slave blocks it from reaching output!</strong>
+                </p>
+            </div>
+            
+            <div class="comparison-card" style="background: #e8ffe8;">
+                <h4>Phase 2: Clock = 1 (Rising Edge!)</h4>
+                <div class="circuit-display" style="margin-top: 15px; font-size: 0.85em;">
+<pre>
+Clock = <span style="color: green;">1</span>
+        ↓
+Master C = <span style="color: green;">1</span> (inverted = 0)
+  → Master <span style="color: orange;">FREEZES</span>
+  → Captures D value at edge!
+        
+Slave C = <span style="color: green;">1</span>
+  → Slave becomes <span style="color: green;">TRANSPARENT</span>
+  → Copies frozen Master value
+  → <span style="color: green; font-weight: bold;">Output Q updates!</span>
+</pre>
+                </div>
+                <p style="margin-top: 10px; color: #080;">
+                    <strong>Slave copies the value Master captured right at the edge!</strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="success-box">
+            <strong>The Brilliant Trick:</strong><br>
+            • When Clock rises (0→1), Master freezes and Slave opens<br>
+            • Slave copies whatever Master had RIGHT AT THE EDGE<br>
+            • After that, even if D changes, it doesn't matter!<br>
+            • Output Q only changes at rising edges!
+        </div>
+
+        <h3>🔹 D Flip-Flop Timing Diagram</h3>
+        
+        <div class="timing-diagram">
+            <pre style="font-size: 13px; line-height: 1.6;">
+<span style="color: #666;">Time:     0   1   2   3   4   5   6   7   8   9  10</span>
+                  <span style="color: red;">↑</span>           <span style="color: red;">↑</span>           <span style="color: red;">↑</span>
+<span class="signal-name">Clock:</span>       ──┐       ┌───────┐       ┌───────
+                  │   <span style="background: #ffe8e8;">X</span>   │   <span style="background: #ffe8e8;">Y</span>   │   <span style="background: #ffe8e8;">Z</span>   │
+                ──┘       └───────┘       └───────
+                  <span style="color: red; font-weight: bold;">EDGE 1</span>     <span style="color: red; font-weight: bold;">EDGE 2</span>     <span style="color: red; font-weight: bold;">EDGE 3</span>
+
+<span class="signal-name">D (input):</span>   ────┐   ┌───┐       ┌───────────
+                    │   │   │       │
+                  ──┘   └───┘       └───────────
+
+<span class="signal-name">Q (flip-flop):</span>────────┐           ┌───────────
+                        │           │
+                  ──────┘           └───────────
+                        <span style="color: red;">↑</span>           <span style="color: red;">↑</span>
+                    <span style="color: red;">Changes ONLY at edges!</span>
+</pre>
+        </div>
+
+        <h3>🔹 Let's Trace the Flip-Flop Step by Step!</h3>
+        
+        <div class="step-box">
+            <span class="step-number">1</span>
+            <strong>EDGE 1: Clock 0→1, D=0</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>At the exact moment of rising edge, D=0</li>
+                <li>Flip-flop captures D=0</li>
+                <li><strong>Q becomes 0</strong></li>
+                <li>After this, D can change but Q ignores it!</li>
+            </ul>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">2</span>
+            <strong>Region X: Clock=1, D changes</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>D goes 0→1→0 during Clock=1</li>
+                <li>But flip-flop <strong>IGNORES these changes!</strong></li>
+                <li>Q stays 0 (it already captured at the edge)</li>
+                <li>This is different from a latch!</li>
+            </ul>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">3</span>
+            <strong>EDGE 2: Clock 0→1, D=1</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>At this rising edge, D=1</li>
+                <li>Flip-flop captures D=1</li>
+                <li><strong>Q becomes 1</strong></li>
+            </ul>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">4</span>
+            <strong>Region Y: Clock=1, then D changes to 0</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>D changes to 0 while Clock=1</li>
+                <li>Flip-flop ignores this!</li>
+                <li>Q stays 1</li>
+            </ul>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">5</span>
+            <strong>EDGE 3: Clock 0→1, D=0</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>At this edge, D=0</li>
+                <li>Flip-flop captures D=0</li>
+                <li><strong>Q becomes 0</strong></li>
+            </ul>
+        </div>
+
+        <!-- PART 6: COMPARISON -->
+        <h2>⚖️ Part 6: D Latch vs D Flip-Flop - Side by Side!</h2>
+        
+        <div class="comparison-grid">
+            <div class="comparison-card">
+                <h4>🟢 D LATCH (Level-Sensitive)</h4>
+                <table style="width: 100%; margin-top: 15px;">
+                    <tr>
+                        <td style="font-weight: bold;">When active:</td>
+                        <td>Entire time C=1</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Behavior:</td>
+                        <td>Transparent (Q follows D)</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Changes:</td>
+                        <td>Many times if D changes</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Symbol:</td>
+                        <td>
+                            <div style="border: 2px solid #333; display: inline-block; padding: 10px; margin: 5px;">
+                                D ─┤D  Q├─ Q<br>
+                                &nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                                C ─┤C  Q'├─ Q'
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Use case:</td>
+                        <td>Quick temporary storage</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="comparison-card">
+                <h4>🔴 D FLIP-FLOP (Edge-Triggered)</h4>
+                <table style="width: 100%; margin-top: 15px;">
+                    <tr>
+                        <td style="font-weight: bold;">When active:</td>
+                        <td>Only at 0→1 edge</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Behavior:</td>
+                        <td>Captures at edge only</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Changes:</td>
+                        <td>Once per clock cycle max</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Symbol:</td>
+                        <td>
+                            <div style="border: 2px solid #333; display: inline-block; padding: 10px; margin: 5px;">
+                                D ─┤D  Q├─ Q<br>
+                                &nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+                                C ─┤▷ Q'├─ Q'<br>
+                                &nbsp;&nbsp;&nbsp;<span style="color: red;">▷=edge</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Use case:</td>
+                        <td>Registers, state machines</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <h3>🔹 Visual Comparison - Same Inputs!</h3>
+        
+        <div class="timing-diagram">
+            <pre style="font-size: 13px; line-height: 1.8;">
+<span style="color: #666;">Time:     0   1   2   3   4   5   6   7   8   9  10</span>
+                  <span style="color: red;">↑</span>           <span style="color: red;">↑</span>           <span style="color: red;">↑</span>
+<span class="signal-name">Clock:</span>       ──┐       ┌───────┐       ┌───────
+                  │       │       │       │
+                ──┘       └───────┘       └───────
+
+<span class="signal-name">D:</span>            ────┐   ┌───┐       ┌───────────
+                    │   │   │       │
+                  ──┘   └───┘       └───────────
+
+<span style="color: #667eea; font-weight: bold;">Q (LATCH):</span>    ────┐       ┌───┐       ┌───────
+                    │       │   │       │
+                  ──┘       └───┘       └───────
+                    <span style="color: blue;">└─follows D when C=1─┘</span>
+
+<span style="color: #d63384; font-weight: bold;">Q (FLIP-FLOP):</span>────────┐           ┌───────────
+                        │           │
+                  ──────┘           └───────────
+                        <span style="color: red;">↑</span>           <span style="color: red;">↑</span>
+                    <span style="color: red;">Only at edges!</span>
+</pre>
+        </div>
+
+        <div class="interactive-note">
+            <strong>🎯 Key Insight:</strong> See how the latch changes during the clock pulse (follows D), 
+            but the flip-flop only changes at the exact rising edge moment! This makes flip-flops much 
+            more predictable and reliable for building complex digital systems.
+        </div>
+
+        <!-- PART 7: SOLVING EXAM PROBLEM -->
+        <h2>📝 Part 7: How to Solve Your Exam Problem Q2(b)</h2>
+        
+        <div class="concept-box">
+            <h3>The Question</h3>
+            <p style="font-size: 1.1em;">
+                Given a timing diagram with Clock and D signals, complete the waveforms for:
+                <br>• Q(latch) - D Latch output
+                <br>• Q(flip-flop) - D Flip-Flop output
+                <br>• Both start at Q=1 (initial state)
+            </p>
+        </div>
+
+        <h3>🔹 Step-by-Step Method</h3>
+        
+        <div class="step-box">
+            <span class="step-number">1</span>
+            <strong>Mark all the rising edges on the clock</strong>
+            <div style="margin: 15px 0;">
+                Draw vertical dashed lines at every 0→1 transition of the clock.
+                These are the moments flip-flops will respond!
+            </div>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">2</span>
+            <strong>For D LATCH: Look at regions where Clock=1</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>Shade all regions where Clock is HIGH</li>
+                <li>In these regions: Q(latch) = D (follows exactly)</li>
+                <li>Outside these regions: Q(latch) holds its value</li>
+            </ul>
+        </div>
+
+        <div class="step-box">
+            <span class="step-number">3</span>
+            <strong>For D FLIP-FLOP: Look ONLY at rising edges</strong>
+            <ul style="margin: 10px 0 0 50px;">
+                <li>At each rising edge, look at what D is at that exact moment</li>
+                <li>Q(flip-flop) takes that D value</li>
+                <li>Q stays constant until the next rising edge</li>
+                <li>Ignore everything between edges!</li>
+            </ul>
+        </div>
+
+        <h3>🔹 Example Problem Solved</h3>
+        
+        <div class="timing-diagram">
+            <pre style="font-size: 12px; line-height: 1.8;">
+<span style="color: #666;">Given:</span>
+<span style="color: #666;">         0   1   2   3   4   5   6   7   8   9</span>
+                 <span style="color: red; font-weight: bold;">↑①</span>      <span style="color: red; font-weight: bold;">↑②</span>  <span style="color: red; font-weight: bold;">↑③</span>      <span style="color: red; font-weight: bold;">↑④</span>
+<span class="signal-name">Clock:</span>      ──┐   ┌────┐  ┐   ┌────
+                 │<span style="background: #ffcccc;">A</span>│   │<span style="background: #ffcccc;">B</span>│<span style="background: #ffcccc;">C</span>│   │<span style="background: #ffcccc;">D</span>
+               ──┘   └────┘  └───┘────
+
+<span class="signal-name">D:</span>           ──┐ ┌─┐      ┌────────
+                 │ │ │      │
+               ──┘ └─┘      └────────
+
+<span style="color: #666;">Solution:</span>
+
+<span class="signal-name" style="color: #667eea;">Q(latch):</span>   <span style="background: yellow;">1</span>──┐   ┌─┐  ┐   ┌────────
+  (start=1)    │<span style="background: #ccffcc;">follows</span>│ │<span style="background: #ccffcc;">follows</span>│   │<span style="background: #ccffcc;">follows</span>
+               ┘   └─┘  └───┘────────
+                 <span style="color: blue;">↑changes in regions A,B,C,D</span>
+
+<span class="signal-name" style="color: #d63384;">Q(flip-flop):</span><span style="background: yellow;">1</span>──┐         ┌─┐        
+  (start=1)    │         │ │
+               ┘         └─┘────────
+                 <span style="color: red;">↑①</span>       <span style="color: red;">↑②</span><span style="color: red;">↑③</span>      <span style="color: red;">↑④</span>
+                 <span style="color: red;">D=0</span>      <span style="color: red;">D=1</span><span style="color: red;">D=0</span>    <span style="color: red;">D=1</span>
+</pre>
+        </div>
+
+        <h3>🔹 Explanation of Solution</h3>
+        
+        <table class="truth-table" style="font-size: 0.95em;">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Clock</th>
+                    <th>D Value</th>
+                    <th>Q(latch)</th>
+                    <th>Q(flip-flop)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Initial</strong></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1 (hold)</td>
+                    <td>1 (hold)</td>
+                </tr>
+                <tr class="highlight-yellow">
+                    <td><strong>Region A</strong></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0 (follows D)</td>
+                    <td>1 (wait for edge)</td>
+                </tr>
+                <tr class="highlight-green">
+                    <td><strong>Edge ①</strong></td>
+                    <td>1→0</td>
+                    <td>0</td>
+                    <td>-</td>
+                    <td>0 (captures D=0!)</td>
+                </tr>
+                <tr>
+                    <td><strong>Between</strong></td>
+                    <td>0</td>
+                    <td>0→1→0</td>
+                    <td>0 (hold)</td>
+                    <td>0 (hold)</td>
+                </tr>
+                <tr class="highlight-yellow">
+                    <td><strong>Region B</strong></td>
+                    <td>1</td>
+                    <td>0→1→0</td>
+                    <td>0→1→0 (follows!)</td>
+                    <td>0 (wait)</td>
+                </tr>
+                <tr class="highlight-green">
+                    <td><strong>Edge ②</strong></td>
+                    <td>1→0</td>
+                    <td>1</td>
+                    <td>-</td>
+                    <td>1 (captures D=1!)</td>
+                </tr>
+                <tr class="highlight-yellow">
+                    <td><strong>Region C</strong></td>
+                    <td>1</td>
+                    <td>1→0</td>
+                    <td>1→0 (follows!)</td>
+                    <td>1 (wait)</td>
+                </tr>
+                <tr class="highlight-green">
+                    <td><strong>Edge ③</strong></td>
+                    <td>1→0</td>
+                    <td>0</td>
+                    <td>-</td>
+                    <td>0 (captures D=0!)</td>
+                </tr>
+                <tr>
+                    <td><strong>Between</strong></td>
+                    <td>0</td>
+                    <td>0→1</td>
+                    <td>0 (hold)</td>
+                    <td>0 (hold)</td>
+                </tr>
+                <tr class="highlight-yellow">
+                    <td><strong>Region D</strong></td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1 (follows)</td>
+                    <td>0 (wait)</td>
+                </tr>
+                <tr class="highlight-green">
+                    <td><strong>Edge ④</strong></td>
+                    <td>1→0</td>
+                    <td>1</td>
+                    <td>-</td>
+                    <td>1 (captures D=1!)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- FINAL TIPS -->
+        <h2>💡 Final Tips & Tricks</h2>
+        
+        <div class="success-box">
+            <strong>✓ For D Latch:</strong><br>
+            1. Highlight all Clock=1 regions with a marker<br>
+            2. In those regions, Q copies D exactly<br>
+            3. Outside those regions, Q freezes
+        </div>
+
+        <div class="success-box">
+            <strong>✓ For D Flip-Flop:</strong><br>
+            1. Mark ONLY the rising edges (0→1)<br>
+            2. At each edge, see what D is<br>
+            3. Q takes that value and holds until next edge<br>
+            4. Completely ignore what happens between edges!
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ Common Mistakes to Avoid:</strong><br>
+            ❌ Don't make flip-flop follow D during Clock=1<br>
+            ❌ Don't look at falling edges (unless specifically falling-edge triggered)<br>
+            ❌ Don't forget to hold the value when Clock=0<br>
+            ✅ Always start from the given initial value!
+        </div>
+
+        <h3>🔹 Quick Reference Chart</h3>
+        
+        <table class="truth-table">
+            <thead>
+                <tr>
+                    <th>Device</th>
+                    <th>Responds When?</th>
+                    <th>Memory Rule</th>
+                    <th>Symbol Clue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>SR Latch</strong></td>
+                    <td>S=1 or R=1</td>
+                    <td>Hold when S=R=0</td>
+                    <td>No clock input</td>
+                </tr>
+                <tr>
+                    <td><strong>D Latch</strong></td>
+                    <td>Entire C=1 period</td>
+                    <td>Transparent when C=1<br>Hold when C=0</td>
+                    <td>C (no triangle)</td>
+                </tr>
+                <tr>
+                    <td><strong>D Flip-Flop</strong></td>
+                    <td>Only at 0→1 edge</td>
+                    <td>Capture at edge<br>Hold everywhere else</td>
+                    <td>▷ (triangle = edge)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="concept-box" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); border-color: #84fab0;">
+            <h3 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🎓 You're Now Ready!</h3>
+            <p style="font-size: 1.15em; color: white;">
+                You understand:<br>
+                ✓ How SR latches use feedback to store bits<br>
+                ✓ How D latches simplify the interface<br>
+                ✓ The difference between level-sensitive and edge-triggered<br>
+                ✓ How to read and draw timing diagrams<br>
+                ✓ How to solve exam problems step by step!
+            </p>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0; padding: 30px; background: #f8f9ff; border-radius: 15px;">
+            <h2 style="color: #667eea;">Practice Makes Perfect! 🚀</h2>
+            <p style="font-size: 1.1em; margin-top: 15px;">
+                Try drawing timing diagrams yourself. Start with simple ones and build up!<br>
+                Remember: <strong>Latch follows, Flip-flop captures!</strong>
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>
