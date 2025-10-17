@@ -4,6 +4,9 @@
 
 It combines **Artificial Intelligence**, **Natural Language Processing (NLP)**, and **Gamification** to deliver a personalized and engaging study experience.
 
+```markdown
+![Dashboard Page](./screenshots/student_dash.png)
+![Calendar Dashboard](./screenshots/calendar.png)
 ---
 
 ## 🚀 Features
